@@ -1,0 +1,17 @@
+project_name=battlecraft
+client_version=1.7.33
+
+
+# 由服务端维护
+server_version=1.7.31
+
+# go1.13 后默认开启了 module 
+GO111MODULE=off
+
+# https://golang.org/cmd/go/#hdr-Module_configuration_for_non_public_modules
+GOPRIVATE=github.com/ApeCrafts/*
+
+# 用于解决依赖被墙的问题
+GOPROXY=https://goproxy.cn
+
+# https_proxy=socks5://127.0.0.1:1080

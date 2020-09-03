@@ -1,0 +1,16 @@
+~$*.xlsx
+.DS_Store
+*.retry
+*.checksum
+*.test
+*.swp
+*.cpuprof
+*.log
+tags
+*.bin
+*.pyc
+*.out
+*.orig
+
+
+

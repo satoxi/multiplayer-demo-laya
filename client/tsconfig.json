@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "outDir": "./bin/js",
+    "rootDir": "./src/",
+    "plugins": [
+      {
+        "name": "typescript-tslint-plugin"
+      }
+    ]
+  },
+  "exclude": ["node_modules", "./src/utils", "./src/tests"],
+  "references": [{ "path": "./src/utils" }, { "path": "./src/utils/wechat" }]
+}

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "composite": true,
+    "declaration": true,
+    "target": "es6",
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "rootDir": "./",
+    "outFile": "../../bin/js/utils.js"
+  },
+  "exclude": ["wechat"],
+  "include": ["../../libs/LayaAir.d.ts", "./**/*.ts"],
+  "references": [{ "path": "./wechat" }]
+}

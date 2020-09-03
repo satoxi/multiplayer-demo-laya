@@ -1,0 +1,14 @@
+{
+  "search.exclude": {
+    "./bin/js": true,
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "./.userdata": true,
+    "./libs": true,
+    "./bin/libs": true,
+    "./release": true
+  },
+  "vim.hlsearch": true,
+  "vim.ignorecase": false,
+  "vim.useSystemClipboard": false
+}

@@ -1,0 +1,26 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:latest"],
+  "jsRules": {},
+  "rules": {
+    "no-namespace": false,
+    "max-classes-per-file": false,
+    "member-ordering": false,
+    "variable-name": false,
+    "ban-types": false,
+    "trailing-comma": false,
+    "arrow-parens": false,
+    "no-console": false,
+    "quotemark": false,
+    "no-empty": false,
+    "object-literal-sort-keys": false,
+    "no-bitwise": false,
+    "prefer-for-of": false,
+    "no-reference": false,
+    "prefer-conditional-expression": false
+  },
+  "rulesDirectory": [],
+  "linterOptions": {
+    "exclude": ["src/msg/*"]
+  }
+}

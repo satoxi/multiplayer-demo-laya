@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "composite": true,
+    "declaration": true,
+    "target": "es6",
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "rootDir": "./",
+    "outFile": "../../../bin/js/wx.js",
+    "removeComments": true
+  },
+  "include": [
+    "../../../libs/LayaAir.d.ts",
+    "./**/*.ts",
+    "../../../libs/hago.d.ts"
+  ]
+}

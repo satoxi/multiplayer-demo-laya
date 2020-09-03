@@ -1,0 +1,9 @@
+.DS_Store
+.userdata
+release
+bin/res/atlas
+bin/ui
+.laya/chrome
+bin/js
+bin/*.png
+node_modules

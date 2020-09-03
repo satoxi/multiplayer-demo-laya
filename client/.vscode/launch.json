@@ -1,0 +1,73 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Chrome against localhost",
+      "file": "${workspaceRoot}/bin/index.html?branch=local&code=user1",
+      // "file": "${workspaceRoot}/bin/index.html",
+      "webRoot": "${workspaceRoot}",
+      "userDataDir": "${workspaceRoot}/.userdata",
+      "runtimeArgs": [
+        "--allow-file-access-from-files",
+        "--allow-file-access-frome-files",
+        "--disable-web-security"
+      ],
+      "preLaunchTask": "tsc"
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch(local)",
+      "file": "${workspaceRoot}/bin/index.html?online=true&branch=local&code=user1",
+      "webRoot": "${workspaceRoot}",
+      "userDataDir": "${workspaceRoot}/.userdata",
+      "runtimeArgs": [
+        "--allow-file-access-from-files",
+        "--allow-file-access-frome-files",
+        "--disable-web-security",
+        "--user-data-dir=/tmp/"
+      ],
+      "preLaunchTask": "tsc"
+    },
+ 
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch(alpha)",
+      "file": "${workspaceRoot}/bin/index.html?online=true&branch=alpha&code=user1",
+      "webRoot": "${workspaceRoot}",
+      "userDataDir": "${workspaceRoot}/.userdata",
+      "runtimeArgs": [
+        "--allow-file-access-from-files",
+        "--allow-file-access-frome-files",
+        "--disable-web-security"
+      ],
+      "preLaunchTask": "tsc"
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Run one Linux",
+      "file": "${workspaceRoot}/bin/index.html?online=true&branch=local&code=user5",
+      "webRoot": "${workspaceRoot}",
+      "userDataDir": "${workspaceRoot}/.userdata",
+      "runtimeArgs": [
+        "--allow-file-access-from-files",
+        "--allow-file-access-frome-files",
+        "--disable-web-security",
+        "--user-data-dir=/tmp/"
+      ],
+      "preLaunchTask": "tsc",
+      "runtimeExecutable": "/usr/bin/chromium"
+    },
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Attach to Chrome",
+      "port": 9222,
+      "webRoot": "${workspaceRoot}"
+    }
+  ]
+}

@@ -20,11 +20,7 @@ class wx {
   }
 
   public static login(object: any) {
-    if (wx.hago) {
-      hg.login(object);
-    } else {
-      object.success({ code: '0710D3lO0nTYHa2GJ7kO0ioflO00D3lO' });
-    }
+    object.success({ code: '0710D3lO0nTYHa2GJ7kO0ioflO00D3lO' });
   }
   public static appleLogin(object: any) {}
   public static authorize(object: any) {}
@@ -38,11 +34,7 @@ class wx {
     return new opencontext();
   }
 
-  public static getUserInfo(object: any) {
-    if (wx.hago) {
-      hg.getUserInfo(object);
-    }
-  }
+  public static getUserInfo(object: any) {}
   public static getSetting(object: any) {
     if (object && object.success) {
       const authSetting = new AuthSetting();
@@ -141,43 +133,11 @@ class wx {
     };
   }
   public static getSystemInfo(object: any) {
-    if (wx.hago) {
-      hg.initWebDebug({
-        gameId: 'shengxiaopaidui_yn',
-        user: 1,
-        env: 'Test',
-        countryCode: 'ID',
-        language: 'id',
-        success: () => {
-          try {
-            const res = hg.getSystemInfoSync();
-            if (res) {
-              if (!res.platform) {
-                res.platform = 'android';
-              }
-              if (object.success) {
-                object.success(res);
-              }
-            } else if (object.fail) {
-              object.fail();
-            }
-          } catch (e) {
-            if (object.fail) {
-              object.fail();
-            }
-          }
-        },
-        fail: res => {
-          console.log('hago start webdebug fail', res);
-        },
-      });
-    } else {
-      object.success({
-        SDKVersion: '1.9.0',
-        platform: 'debug',
-        version: '7.0.7',
-      });
-    }
+    object.success({
+      SDKVersion: '1.9.0',
+      platform: 'debug',
+      version: '7.0.7',
+    });
   }
   public static triggerGC() {}
 
@@ -267,11 +227,7 @@ class wx {
   public static getAvailableAudioSources(object: Object) {}
 
   public static createRewardedVideoAd(object: any) {
-    if (wx.hago) {
-      return hg.createRewardedVideoAd(object);
-    } else {
-      return new RewardedVideoAd();
-    }
+    return new RewardedVideoAd();
   }
   public static createBannerAd(object: any): BannerAd {
     return new BannerAd();
@@ -293,11 +249,7 @@ class wx {
   }
 
   public static hideLoading(object: any) {}
-  public static showShareMenu(object: any) {
-    if (wx.hago) {
-      hg.showShareMenu(object);
-    }
-  }
+  public static showShareMenu(object: any) {}
   public static onShareAppMessage(callback: Function) {}
 
   public static previewImage(object: any) {}
@@ -334,11 +286,7 @@ class wx {
   }
 
   public static exitMiniProgram(object: any) {
-    if (wx.hago) {
-      hg.requestPayment(object);
-    } else {
-      console.log('退出微信');
-    }
+    console.log('退出微信');
   }
 
   public static showActionSheet(object: any) {}
@@ -430,16 +378,8 @@ class wx {
   public static getGameUpperFollowingStatus(object: any) {}
 
   // Hago APIs
-  public static requestPayment(object: Object) {
-    if (wx.hago) {
-      hg.requestPayment(object);
-    }
-  }
-  public static gameLoadResult(object: Object) {
-    if (wx.hago) {
-      hg.gameLoadResult(object);
-    }
-  }
+  public static requestPayment(object: Object) {}
+  public static gameLoadResult(object: Object) {}
 
   public static reportAnalytics(key: string, value: any) {}
 

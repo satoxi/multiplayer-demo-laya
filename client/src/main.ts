@@ -58,7 +58,9 @@ function initLandscapeStage() {
   Laya.stage.screenMode = Laya.Stage.SCREEN_HORIZONTAL;
 }
 
-function load() {}
+function load() {
+  Demo.instance.start();
+}
 
 function changeBgColorToUI() {
   Laya.stage.bgColor = '#ffffff';

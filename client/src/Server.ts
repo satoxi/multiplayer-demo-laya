@@ -5,16 +5,19 @@ class Server extends GameObject {
     this.applyVerticalMove(dtSecs);
 
     if (Muse.timer.fixedTime - this._lastTickTime > Demo.instance.frameTime) {
-      this._pendingInputs.forEach(data => {
-        if (data) {
-          this.applyHorizontalInput(dtSecs, data);
-          this._lastProcessedInputID = data.inputID;
-        }
-      });
-      this._pendingInputs = [];
+      if (this._pendingInputs.length > 0) {
+        this._pendingInputs.forEach(data => {
+          if (data) {
+            this.applyHorizontalInput(dtSecs, data);
+            this._lastProcessedInputID = data.inputID;
+            console.warn('server apply input ', data.inputID, this._entity.x);
+          }
+        });
+        this._pendingInputs = [];
 
-      this.tick();
-      this._lastTickTime = Muse.timer.fixedTime;
+        this.tick();
+        this._lastTickTime = Muse.timer.fixedTime;
+      }
     }
   }
 
@@ -103,7 +106,7 @@ class Server extends GameObject {
   private _velocity: Muse.Vector = Muse.Vector.zero;
   private _isGrounded: boolean;
   private _lastTickTime: number = 0;
-  private _lastProcessedInputID: number;
+  private _lastProcessedInputID: number = 0;
 
   private _pendingInputs: IInputData[] = [];
 

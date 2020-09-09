@@ -2,6 +2,27 @@ class ClientLocal extends GameObject {
   public fixedUpdate() {
     const dtSecs = Muse.timer.fixedDeltaTime / 1000;
 
+    for (const s of this._snapshots) {
+      this._entity.pos(s.position.x, s.position.y);
+      if (Demo.instance.enableServerReconciliation) {
+        const toBeRemoved = [];
+        for (const input of this._pendingInputs) {
+          if (input.inputID <= s.lastProcessedInput) {
+            toBeRemoved.push(input);
+          } else {
+            this.applyHorizontalInput(dtSecs, input);
+          }
+        }
+        for (const input of toBeRemoved) {
+          const index = this._pendingInputs.indexOf(input);
+          this._pendingInputs.splice(index);
+        }
+      } else {
+        this._pendingInputs = [];
+      }
+    }
+    this._snapshots = [];
+
     const data = this.processHorizontalInput();
 
     if (Demo.instance.enableLocalPrediction) {
@@ -19,10 +40,10 @@ class ClientLocal extends GameObject {
   }
 
   public syncSnapshot(s: ISnapshot) {
-    this._states.push(s);
-
     if (!Demo.instance.enableLocalPrediction) {
       this._entity.pos(s.position.x, s.position.y);
+    } else {
+      this._snapshots.push(s);
     }
   }
 
@@ -123,7 +144,7 @@ class ClientLocal extends GameObject {
 
   private _velocity: Muse.Vector = Muse.Vector.zero;
   private _pendingInputs: IInputData[] = [];
-  private _states: ISnapshot[] = [];
+  private _snapshots: ISnapshot[] = [];
 
   private _lastInput: number = 0;
   private _isGrounded: boolean;

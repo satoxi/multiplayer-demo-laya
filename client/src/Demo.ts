@@ -12,7 +12,7 @@ class Demo {
   public enableLocalPrediction: boolean = false;
   public enableServerReconciliation: boolean = false;
   public enableNetworkInterpolation: boolean = false;
-  public latencyMilliseconds: number = 0;
+  public latencyMilliseconds: number = 1000;
   public interpolationDelayTime: number = 100;
   public maxExtrapolationTime: number = 500;
   public tolerantDistance: number = 5;

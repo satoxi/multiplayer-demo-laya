@@ -3,7 +3,7 @@ class ClientLocal extends GameObject {
     const dtSecs = Muse.timer.fixedDeltaTime / 1000;
 
     for (const s of this._snapshots) {
-      this._entity.pos(s.position.x, s.position.y);
+      this._entity.pos(s.position.x, this._entity.y);
       if (Demo.instance.enableServerReconciliation) {
         const toBeRemoved = [];
         for (const input of this._pendingInputs) {

@@ -15,7 +15,7 @@ class ClientLocal extends GameObject {
         }
         for (const input of toBeRemoved) {
           const index = this._pendingInputs.indexOf(input);
-          this._pendingInputs.splice(index);
+          this._pendingInputs.splice(index, 1);
         }
       } else {
         this._pendingInputs = [];

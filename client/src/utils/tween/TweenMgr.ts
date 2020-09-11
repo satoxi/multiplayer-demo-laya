@@ -12,7 +12,7 @@ namespace Muse {
       this._isUpdating = true;
 
       // loop backwards so we can remove completed tweens
-      for (let i = this._activeTweens.length - 1; i >= 0; --i) {
+      for (let i = 0; i < this._activeTweens.length; ++i) {
         const tween = this._activeTweens[i];
         if (this._tempTweens.indexOf(tween) > -1) {
           // this tween is already deleted by previous tween tick of this loop

@@ -9,10 +9,10 @@ class Demo {
   public horizontalSpeed: number = 150;
   public jumpSpeed: number = 300;
   public tickRate: number = 60;
-  public enableLocalPrediction: boolean = false;
-  public enableServerReconciliation: boolean = false;
+  public enableLocalPrediction: boolean = true;
+  public enableServerReconciliation: boolean = true;
   public enableNetworkInterpolation: boolean = false;
-  public latencyMilliseconds: number = 1000;
+  public latencyMilliseconds: number = 100;
   public interpolationDelayTime: number = 100;
   public maxExtrapolationTime: number = 500;
   public tolerantDistance: number = 5;

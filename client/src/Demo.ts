@@ -43,7 +43,7 @@ class Demo {
   constructor() {
     this._clientLocal = new ClientLocal();
     this._server = new Server();
-    // this._clientNetwork = new ClientNetwork();
+    this._clientNetwork = new ClientNetwork();
   }
 
   private sendMessageToTarget(target: Target, methodName: string, value: any) {
@@ -66,6 +66,9 @@ class Demo {
         break;
       case Target.clientNetwork:
         if (this._clientNetwork) {
+          if (methodName === 'syncSnapshot') {
+            this._clientNetwork.syncSnapShot(value);
+          }
         }
         break;
     }

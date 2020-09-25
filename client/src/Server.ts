@@ -10,7 +10,7 @@ class Server extends GameObject {
           if (data) {
             this.applyHorizontalInput(dtSecs, data);
             this._lastProcessedInputID = data.inputID;
-            console.warn('server apply input ', data.inputID, this._entity.x);
+            Debug.warn('server apply input ', data.inputID, this._entity.x);
           }
         });
         this._pendingInputs = [];

@@ -134,10 +134,6 @@ class ClientLocal extends GameObject {
     }
   }
 
-  private getServerTime(): number {
-    return Muse.timer.fixedTime - Demo.instance.latencyMilliseconds / 1000;
-  }
-
   private checkIfGrounded(): boolean {
     return this._entity.y >= this._platform.y;
   }

@@ -1,8 +1,44 @@
-class ClientNetwork extends GameObject {
-  public fixedUpdate() {}
+const stateBufferSize: number = 20;
 
-  public syncSnapshot(s: ISnapshot) {
-    console.warn('2 sync snapshot ');
+class ClientNetwork extends GameObject {
+  public syncSnapShot(snapshot: ISnapshot) {
+    if (this._states.length === 0) {
+      this._states.push(snapshot);
+      this._currentLastKnownState = this._states[0];
+    } else {
+      if (snapshot.timestamp < this._currentLastKnownState.timestamp) {
+        return;
+      }
+
+      if (this._states.length >= stateBufferSize) {
+        this._states.pop();
+      }
+      this._states.unshift(snapshot);
+      this._currentLastKnownState = this._states[0];
+    }
+  }
+
+  public fixedUpdate() {
+    if (this._states.length === 0) {
+      return;
+    }
+
+    if (
+      this._states.length === 1 ||
+      !Demo.instance.enableNetworkInterpolation
+    ) {
+      this._entity.pos(
+        this._currentLastKnownState.position.x,
+        this._currentLastKnownState.position.y
+      );
+      return;
+    }
+
+    const interpolationStartTime =
+      this.getServerTime() - Demo.instance.interpolationDelayTime;
+    if (interpolationStartTime < this._currentLastKnownState.timestamp) {
+      this.doInterpolation(interpolationStartTime);
+    }
   }
 
   constructor() {
@@ -35,7 +71,51 @@ class ClientNetwork extends GameObject {
     this._entity.pivotY = size;
     this._entity.pos(size / 2, parent.height - platformHeight);
     parent.addChild(this._entity);
-
-    GameObject.prototype['syncSnapshot'] = this.syncSnapshot.bind(this);
   }
+
+  // algorithm is based on https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking
+  private doInterpolation(interpolationStartTime: number) {
+    for (let i = 0; i < this._states.length; i++) {
+      const state = this._states[i];
+      if (
+        state.timestamp <= interpolationStartTime ||
+        i === this._states.length - 1
+      ) {
+        const latterState = this._states[Math.max(i - 1, 0)];
+        const earlierState = state;
+        const length = latterState.timestamp - earlierState.timestamp;
+        let t = 0;
+        if (length > 1) {
+          t = (interpolationStartTime = earlierState.timestamp) / length;
+        }
+        const targetPosition = Muse.Vector.lerp(
+          earlierState.position,
+          latterState.position,
+          t
+        );
+        const currentPosition = new Muse.Vector(this._entity.x, this._entity.y);
+        if (Muse.Vector.sqrDistance(targetPosition, currentPosition) < 5) {
+          this._entity.pos(targetPosition.x, targetPosition.y);
+        } else {
+          const position = Muse.Vector.lerp(
+            currentPosition,
+            targetPosition,
+            0.2
+          );
+          this._entity.pos(position.x, position.y);
+        }
+      }
+    }
+  }
+
+  private getServerTime(): number {
+    return Muse.timer.fixedTime - Demo.instance.latencyMilliseconds;
+  }
+
+  private _currentSimulateTime: number;
+  private _needCorrectionOnNextState: boolean;
+  private _currentLastKnownState: ISnapshot;
+  private _states: ISnapshot[] = [];
+
+  private _velocity: Muse.Vector;
 }

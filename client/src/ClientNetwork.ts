@@ -2,6 +2,12 @@ const stateBufferSize: number = 20;
 
 class ClientNetwork extends GameObject {
   public syncSnapShot(snapshot: ISnapshot) {
+    if (this._needCorrectionOnNextState) {
+      this._needCorrectionOnNextState = false;
+      this._entity.pos(snapshot.position.x, snapshot.position.y);
+      this._states = [];
+    }
+
     if (this._states.length === 0) {
       this._states.push(snapshot);
       this._currentLastKnownState = this._states[0];
@@ -38,6 +44,11 @@ class ClientNetwork extends GameObject {
       this.getServerTime() - Demo.instance.interpolationDelayTime;
     if (interpolationStartTime < this._currentLastKnownState.timestamp) {
       this.doInterpolation(interpolationStartTime);
+    } else if (
+      interpolationStartTime <
+      this._currentLastKnownState.timestamp + Demo.instance.maxExtrapolationTime
+    ) {
+      this.doExtrapolation(interpolationStartTime);
     }
   }
 
@@ -110,6 +121,28 @@ class ClientNetwork extends GameObject {
 
         return;
       }
+    }
+  }
+
+  private doExtrapolation(time: number) {
+    const delta = this._currentLastKnownState.velocity.scale(
+      time - this._currentLastKnownState.timestamp
+    );
+    const targetPosition = new Muse.Vector(
+      this._entity.x + delta.x,
+      this._entity.y + delta.y
+    );
+
+    if (
+      Muse.Vector.distance(
+        targetPosition,
+        this._currentLastKnownState.position
+      ) > Demo.instance.tolerantDistance
+    ) {
+      this._needCorrectionOnNextState = true;
+    } else {
+      this._entity.x = targetPosition.x;
+      this._entity.y = targetPosition.y;
     }
   }
 

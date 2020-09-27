@@ -85,8 +85,11 @@ class ClientNetwork extends GameObject {
         const earlierState = state;
         const length = latterState.timestamp - earlierState.timestamp;
         let t = 0;
-        if (length > 1) {
-          t = (interpolationStartTime = earlierState.timestamp) / length;
+        if (length > 0) {
+          t =
+            (Math.max(interpolationStartTime, earlierState.timestamp) -
+              earlierState.timestamp) /
+            length;
         }
         const targetPosition = Muse.Vector.lerp(
           earlierState.position,
@@ -104,6 +107,8 @@ class ClientNetwork extends GameObject {
           );
           this._entity.pos(position.x, position.y);
         }
+
+        return;
       }
     }
   }

@@ -2,12 +2,6 @@ const stateBufferSize: number = 20;
 
 class ClientNetwork extends GameObject {
   public syncSnapShot(snapshot: ISnapshot) {
-    if (this._needCorrectionOnNextState) {
-      this._needCorrectionOnNextState = false;
-      this._entity.pos(snapshot.position.x, snapshot.position.y);
-      this._states = [];
-    }
-
     if (this._states.length === 0) {
       this._states.push(snapshot);
       this._currentLastKnownState = this._states[0];
@@ -108,17 +102,8 @@ class ClientNetwork extends GameObject {
           t
         );
         const currentPosition = new Muse.Vector(this._entity.x, this._entity.y);
-        if (Muse.Vector.sqrDistance(targetPosition, currentPosition) < 5) {
-          this._entity.pos(targetPosition.x, targetPosition.y);
-        } else {
-          const position = Muse.Vector.lerp(
-            currentPosition,
-            targetPosition,
-            0.2
-          );
-          this._entity.pos(position.x, position.y);
-        }
-
+        const position = Muse.Vector.lerp(currentPosition, targetPosition, 0.2);
+        this._entity.pos(position.x, position.y);
         return;
       }
     }
@@ -132,28 +117,14 @@ class ClientNetwork extends GameObject {
       this._entity.x + delta.x,
       this._entity.y + delta.y
     );
-
-    if (
-      Muse.Vector.distance(
-        targetPosition,
-        this._currentLastKnownState.position
-      ) > Demo.instance.tolerantDistance
-    ) {
-      this._needCorrectionOnNextState = true;
-    } else {
-      this._entity.x = targetPosition.x;
-      this._entity.y = targetPosition.y;
-    }
+    this._entity.x = targetPosition.x;
+    this._entity.y = targetPosition.y;
   }
 
   private getServerTime(): number {
     return Muse.timer.fixedTime - Demo.instance.latencyMilliseconds;
   }
 
-  private _currentSimulateTime: number;
-  private _needCorrectionOnNextState: boolean;
   private _currentLastKnownState: ISnapshot;
   private _states: ISnapshot[] = [];
-
-  private _velocity: Muse.Vector;
 }

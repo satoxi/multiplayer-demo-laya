@@ -14,10 +14,10 @@ class Server extends GameObject {
           }
         });
         this._pendingInputs = [];
-
-        this.tick();
-        this._lastTickTime = Muse.timer.fixedTime;
       }
+
+      this.tick();
+      this._lastTickTime = Muse.timer.fixedTime;
     }
   }
 
